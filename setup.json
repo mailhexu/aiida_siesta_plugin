@@ -10,11 +10,15 @@
     "classifiers": [
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
         "Development Status :: 3 - Alpha"
     ],
     "install_requires": [
-        "aiida_core[docs,atomic_tools]>=0.12.0,<1.0.0",
-        "pytest>=3.3.2"
+        "aiida_core[docs,atomic_tools]>=0.12.0",
+        "pytest>=3.3.2",
+        "six"
     ],
     "entry_points": {
         "aiida.calculations": [
