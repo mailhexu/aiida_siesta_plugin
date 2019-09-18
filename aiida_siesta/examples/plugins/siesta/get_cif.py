@@ -1,5 +1,7 @@
 #!/usr/bin/env runaiida
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 import os
 
@@ -18,7 +20,7 @@ SiestaCalc = CalculationFactory('siesta.siesta')
 try:
     calc_id = sys.argv[1]
 except IndexError:
-    print >> sys.stderr, ("Must provide as parameter the calc ID")
+    print(("Must provide as parameter the calc ID"), file=sys.stderr)
     sys.exit(1)
 
 
@@ -39,20 +41,20 @@ if isinstance(calc,SiestaCalc):
         try:
             sout=calc.out.output_structure
             msg = "Output structure"
-            print "{}".format(sout._prepare_cif())
+            print("{}".format(sout._prepare_cif()))
         except:
-            print ">> Output structure not available !!"
+            print(">> Output structure not available !!")
             
     else:
         sin=calc.inp.structure
         msg = "Input structure"
-        print "{}".format(sin._prepare_cif())
+        print("{}".format(sin._prepare_cif()))
 
-    print "# -- Calculation status: '{}'".format(calc.get_state())
-    print "# -- {}".format(msg)
+    print("# -- Calculation status: '{}'".format(calc.get_state()))
+    print("# -- {}".format(msg))
 
 else:
-    print >> sys.stderr, ("Calculation should be a Siesta calculation.")
+    print(("Calculation should be a Siesta calculation."), file=sys.stderr)
     sys.exit(1)
 
 

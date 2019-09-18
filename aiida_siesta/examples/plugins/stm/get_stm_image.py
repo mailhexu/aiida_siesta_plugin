@@ -27,6 +27,8 @@
 # Note that we are not using "aiidaenv" in the first line. We need 
 # the following two lines before any other AiiDA loads:
 #
+from __future__ import absolute_import
+from __future__ import print_function
 from aiida import load_dbenv
 load_dbenv()
 
@@ -40,7 +42,7 @@ import sys
 try:
     stm_id = int(sys.argv[1])
 except:
-    print >> sys.stderr, ("Must provide as parameter the stm_array ID")
+    print(("Must provide as parameter the stm_array ID"), file=sys.stderr)
     sys.exit(1)
     
 arraydata = load_node(stm_id)

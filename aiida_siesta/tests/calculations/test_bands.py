@@ -1,5 +1,7 @@
 #!/usr/bin/env runaiida
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
+from __future__ import print_function
 import os
 import sys
 
@@ -65,9 +67,9 @@ def test_bands(siesta_develop):
         pseudo, created = PsfData.get_or_create(absname, use_first=True)
 
         if created:
-            print "Created the pseudo for {}".format(kind)
+            print("Created the pseudo for {}".format(kind))
         else:
-            print "Using the pseudo for {} from DB: {}".format(kind, pseudo.pk)
+            print("Using the pseudo for {} from DB: {}".format(kind, pseudo.pk))
         # Attach pseudo node to the calculation
         pseudo_dict[kind] = pseudo
 

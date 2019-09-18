@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
+from __future__ import absolute_import
 def test_siesta_calculation_entry_point(siesta_develop):
     from aiida.orm import CalculationFactory
     siesta_calculation = CalculationFactory('siesta.siesta')

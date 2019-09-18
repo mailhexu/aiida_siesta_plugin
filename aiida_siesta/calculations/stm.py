@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
 import os
 
 # Module with fdf-aware dictionary
-from tkdict import FDFDict
+from .tkdict import FDFDict
 
 from aiida.orm.calculation.job import JobCalculation
 from aiida.common.exceptions import InputValidationError
@@ -12,6 +13,8 @@ from aiida.common.datastructures import CodeInfo
 
 from aiida.orm.data.parameter import ParameterData
 from aiida.orm.data.remote import RemoteData 
+import six
+from six.moves import zip
 
 __copyright__ = u"Copyright (c), 2015, ECOLE POLYTECHNIQUE FEDERALE DE LAUSANNE (Theory and Simulation of Materials (THEOS) and National Centre for Computational Design and Discovery of Novel Materials (NCCR MARVEL)), Switzerland and ROBERT BOSCH LLC, USA. All rights reserved."
 __license__ = "MIT license, see LICENSE.txt file"
@@ -152,7 +155,7 @@ class STMCalculation(JobCalculation):
         # Here, there should be no more parameters...
         if inputdict:
             raise InputValidationError("The following input data nodes are "
-                "unrecognized: {}".format(inputdict.keys()))
+                "unrecognized: {}".format(list(inputdict.keys())))
 
         # END OF INITIAL INPUT CHECK #
 
@@ -285,7 +288,7 @@ def get_input_data_text(key,val, mapping=None):
                              "the 'mapping' parameter")
 
         list_of_strings = []
-        for elemk, itemval in val.iteritems():
+        for elemk, itemval in six.iteritems(val):
             try:
                 idx = mapping[elemk]
             except KeyError:
@@ -297,7 +300,7 @@ def get_input_data_text(key,val, mapping=None):
         
         # I first have to resort, then to remove the index from the first
         # column, finally to join the strings
-        list_of_strings = zip(*sorted(list_of_strings))[1]
+        list_of_strings = list(zip(*sorted(list_of_strings)))[1]
         return "".join(list_of_strings)                          
     elif hasattr(val,'__iter__'):
         # a list/array/tuple of values
@@ -328,11 +331,11 @@ def my_conv_to_fortran(val):
             val_str = '.true.'
         else:
             val_str = '.false.'
-    elif (isinstance(val, (int, long))):
+    elif (isinstance(val, six.integer_types)):
         val_str = "{:d}".format(val)
     elif (isinstance(val, float)):
         val_str = ("{:18.10e}".format(val)).replace('e', 'd')
-    elif (isinstance(val, basestring)):
+    elif (isinstance(val, six.string_types)):
         val_str = "{!s}".format(val)
     else:
         raise ValueError("Invalid value passed, accepts only bools, ints, "
@@ -345,7 +348,7 @@ def _uppercase_dict(d, dict_name):
     from collections import Counter
 
     if isinstance(d,dict):
-        new_dict = dict((str(k).upper(), v) for k, v in d.iteritems())
+        new_dict = dict((str(k).upper(), v) for k, v in six.iteritems(d))
         if len(new_dict) != len(d):
 
             num_items = Counter(str(k).upper() for k in d.keys())

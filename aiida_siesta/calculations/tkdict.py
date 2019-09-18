@@ -14,8 +14,10 @@
 # Not compatible with python3 due to string-specific translation.
 # TODO: use regular expressions for key translation
 
+from __future__ import absolute_import
 from string import maketrans
 from collections import MutableMapping
+import six
 
 
 class TKDict(MutableMapping):
@@ -121,7 +123,7 @@ class FDFDict(TKDict):
         # There are incompatible 'translate'
         # methods for str and unicode objects... 
         
-        if isinstance(key, unicode):
+        if isinstance(key, six.text_type):
             # Unicode uses a single dictionary for translation
             to_remove = "-."
             table = {ord(char): None for char in to_remove}

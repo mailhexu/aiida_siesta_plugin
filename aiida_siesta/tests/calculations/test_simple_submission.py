@@ -1,5 +1,7 @@
 #!/usr/bin/env runaiida
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
+from __future__ import print_function
 import os.path as op
 
 
@@ -98,22 +100,22 @@ def test_simple_submission(siesta_develop):
         pseudo, created = PsfData.get_or_create(absname, use_first=True)
 
         if created:
-            print "\nCreated the pseudo for {}".format(kind)
+            print("\nCreated the pseudo for {}".format(kind))
         else:
-            print "\nUsing the pseudo for {} from DB: {}".format(
-                kind, pseudo.pk)
+            print("\nUsing the pseudo for {} from DB: {}".format(
+                kind, pseudo.pk))
 
     # Attach pseudo node to the calculation
     calc.use_pseudo(pseudo, kind=kind)
 
     calc.store_all()
-    print "created calculation with PK={}".format(calc.pk)
+    print("created calculation with PK={}".format(calc.pk))
     subfolder, script_filename = calc.submit_test()
-    print "Test_submit for calculation (uuid='{}')".format(calc.uuid)
+    print("Test_submit for calculation (uuid='{}')".format(calc.uuid))
 
     assert op.isfile(op.join(op.relpath(subfolder.abspath), script_filename))
-    print "Submit file in {}".format(
-        op.join(op.relpath(subfolder.abspath), script_filename))
+    print("Submit file in {}".format(
+        op.join(op.relpath(subfolder.abspath), script_filename)))
 
     assert op.isfile(op.join(op.relpath(subfolder.abspath), 'aiida.fdf'))
     assert op.isfile(op.join(op.relpath(subfolder.abspath), 'Si.psf'))
